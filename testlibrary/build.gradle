@@ -40,29 +40,40 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
 
-subprojects {
-    apply plugins: 'maven-publish'
-
-    afterEvaluate {
-        publishing {
-            publications {
-                mavenJava(MavenPublication) {
-                    from components.java
-
-                    groupId = 'com.github.denandra-AIT' // Replace with your group ID
-                    artifactId = 'testlibrary' // Replace with your library's artifact ID
-                    version = '0.1' // Replace with your library's version
-
-                    // Include any additional publications or configurations here
-                }
-            }
-
-            repositories {
-                maven {
-                    // URL to your Maven repository
-                    url = uri('https://github.com/denandra-AIT/testLibrary') // Replace with your repository URL
-                }
-            }
-        }
+tasks.register('installArchives', Upload) {
+    description "Installs the artifacts to the local Maven repository."
+    repositories.mavenInstaller {
+        configuration = configurations.default
+        pom.groupId = 'com.github.denandra-AIT'
+        pom.artifactId = 'testlibrary'
+        pom.version = '0.1'
     }
 }
+
+
+//subprojects {
+//    apply plugins: 'maven-publish'
+//
+//    afterEvaluate {
+//        publishing {
+//            publications {
+//                mavenJava(MavenPublication) {
+//                    from components.java
+//
+//                    groupId = 'com.github.denandra-AIT' // Replace with your group ID
+//                    artifactId = 'testlibrary' // Replace with your library's artifact ID
+//                    version = '0.1' // Replace with your library's version
+//
+//                    // Include any additional publications or configurations here
+//                }
+//            }
+//
+//            repositories {
+//                maven {
+//                    // URL to your Maven repository
+//                    url = uri('https://github.com/denandra-AIT/testLibrary') // Replace with your repository URL
+//                }
+//            }
+//        }
+//    }
+//}

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
 }
 
 android {
@@ -37,4 +38,31 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+
+subprojects {
+    apply plugins: 'maven-publish'
+
+    afterEvaluate {
+        publishing {
+            publications {
+                mavenJava(MavenPublication) {
+                    from components.java
+
+                    groupId = 'com.github.denandra-AIT' // Replace with your group ID
+                    artifactId = 'testlibrary' // Replace with your library's artifact ID
+                    version = '0.1' // Replace with your library's version
+
+                    // Include any additional publications or configurations here
+                }
+            }
+
+            repositories {
+                maven {
+                    // URL to your Maven repository
+                    url = uri('https://github.com/denandra-AIT/testLibrary') // Replace with your repository URL
+                }
+            }
+        }
+    }
 }
